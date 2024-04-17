@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GeoTIFF and GeoJSON Map</title>
+  <!-- Include Leaflet and GeoTIFF library -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/geotiff@2.1.0/dist-browser/geotiff.min.js"></script>
+</head>
+<body>
+  <div id="map" style="height: 500px;"></div>
+
+  <script>
+    // Your JavaScript code will go here
+    var map = L.map('map').setView([51.505, -0.09], 13);
+
+    // Add a tile layer (you can use other tile layers based on your needs)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Load GeoTIFF file
+    var tiffUrl = 'https://stuartmatthews.github.io/leaflet-geotiff/tif/wind_speed.tif';
+    fetch(tiffUrl)
+      .then(response => response.arrayBuffer())
+      .then(data => window.GeoTIFF.fromArrayBuffer(data))
+      .then(tiff => tiff.getImage())
+      .then(async image => {
+        const resterData = await image.readRasters();
+
+        var raster =  resterData[0];
+        var bounds = image.getBoundingBox();
+
+        var geoTiffLayer = L.imageOverlay(raster, bounds);
+        console.log('bounds: ', bounds);
+
+        geoTiffLayer.addTo(map);
+
+
+
+        // L.imageOverlay(raster, image.getBoundingBox()).addTo(map);
+        // map.fitBounds(bounds);
+
+      })
+      .catch(error => console.error('Error loading GeoTIFF:', error));
+
+    // Load GeoJSON data
+   
+  </script>
+</body>
+</html>

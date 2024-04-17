@@ -1,0 +1,81 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Side Navbar</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        /* Custom styles for the side navigation */
+        .side-nav {
+            height: 100vh; /* Full height */
+            position: fixed; /* Fixed position - Stay in place */
+            top: 0; /* Stay at the top */
+            left: 0;
+            background-color: #f8f9fa; /* Grey background color */
+            padding-top: 3.5rem; /* Top padding */
+            transition: width 0.3s; /* Transition effect when opening and closing the side navigation */
+            overflow: hidden;
+        }
+        @media (max-width: 768px) {
+            .side-nav {
+                width: 0; /* 0 width when hidden */
+                /* display: none; */
+            }
+            .side-nav.show {
+                width: 250px; /* Expanded width when visible */
+                display: inline;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+
+<!-- Side navigation -->
+<div class="side-nav" id="sideNav">
+    <button class="close-button" id="close-button">close</button>
+    <div class="list-group">
+        <a href="#" class="list-group-item list-group-item-action">Home</a>
+        <a href="#" class="list-group-item list-group-item-action">About</a>
+        <a href="#" class="list-group-item list-group-item-action">Services</a>
+        <a href="#" class="list-group-item list-group-item-action">Contact</a>
+    </div>
+</div>
+
+<!-- Content area -->
+<div class="container-fluid">
+    <h2>Main Content</h2>
+    <p>This is the main content area. It will fill the remaining space on the page.</p>
+</div>
+
+<!-- Bootstrap core JavaScript and dependencies -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script>
+    // Toggle side navigation
+    $(document).ready(function () {
+        $('.navbar-toggler').on('click', function () {
+            $('.side-nav').toggleClass('show');
+        });
+    });
+
+    $(document).ready(function () {
+        $('.close-button').on('click', function () {
+            console.log("click")
+            $('.side-nav').removeClass('show');
+        });
+    });
+</script>
+
+</body>
+</html>
